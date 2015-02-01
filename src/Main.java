@@ -32,6 +32,7 @@ public class Main<E, T> {
 				" = " + ((double) numCorrect) / testExamples.size());
 		System.out.println("The final decision tree:");
 		id3Tree.printTree();
+		System.out.println("Thanks!");
 	}
 
 	private static void readFiles(String[] args) throws IOException {

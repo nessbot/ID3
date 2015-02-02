@@ -3,6 +3,9 @@ package ID3;
 import java.util.*;
 
 /**
+ * CS1675
+ * Assignment 1
+ *
  * Created by Steve on 1/29/2015.
  */
 public class ID3Tree {
@@ -47,8 +50,8 @@ public class ID3Tree {
 	/**
 	 * Traverses the tree by following values from an test example
 	 *
-	 * @param x exam
-	 * @return
+	 * @param x example being examined
+	 * @return the label associated with this path
 	 */
 	private String recTest(Node node, Example x) {
 
@@ -80,7 +83,6 @@ public class ID3Tree {
 		String indent = changeIndent(indentAmmount);
 		if (node.getLabel() != null) {                    //base case - leaf node
 			System.out.println("  " + node.printLabelInfo());
-			return;
 		} else {
 			HashMap<String, Node> children = node.getChildren();
 			for (Map.Entry<String, Node> child : children.entrySet()) {
@@ -164,8 +166,7 @@ public class ID3Tree {
 					root.addChild(value, tempNode);
 				} else {
 					LabelPair lp = getCommonLabel(s);                        // if Sv is an empty set create a leaf node
-					root.addChild(value, new Node(lp.label));//  with most common label of current set, S
-					root.setLabelFraction(lp.freq, s.size());
+					root.addChild(value, new Node(lp.label));                //  with most common label of current set, S
 				}
 			}
 			return root;
@@ -223,15 +224,15 @@ public class ID3Tree {
 	}
 
 	/**
-	 * Generates subset of s, containing on examples in which the selected feature matches has the selected value
+	 * Generates subset of s, containing only examples in which the selected feature matches has the selected value
 	 *
 	 * @param feature string feature name that is being tested
 	 * @param value   string value name against which the feature is being tested
 	 * @param s       collection of examples from which the set will be generated
-	 * @return subset contaning only those examples where the feature had the value
+	 * @return subset containing only those examples where the feature had the value
 	 */
 	private ArrayList<Example> getFeatureValueSet(String feature, String value, ArrayList<Example> s) {
-		ArrayList<Example> tempS = new ArrayList<Example>();
+		ArrayList<Example> tempS = new ArrayList<Example>(s);
 		Iterator itr = tempS.iterator();
 		while (itr.hasNext()) {
 			Example test = (Example) itr.next();

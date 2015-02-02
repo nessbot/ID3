@@ -212,7 +212,7 @@ public class ID3Tree {
 				setDiversity = misclassifcation(s).diversity;
 				break;
 			case 2:
-				setDiversity = misclassifcation(s).diversity;
+				setDiversity = gini(s).diversity;
 		}
 		//calculate gain
 		double subsetDiversity = 0;                                                     // sum of diversity of S(x=v) sets

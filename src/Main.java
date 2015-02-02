@@ -18,12 +18,11 @@ public class Main<E, T> {
 	private static HashMap<String, ArrayList<String>> possibleFeatureValues = new HashMap<String, ArrayList<String>>();
 
 	public static void main(String[] args) throws IOException {
-		printHeader();
 		readFiles(args);
 
 		ID3Tree id3Tree = new ID3Tree(trainExamples, possibleLabels, possibleFeatureValues, diversity);
 		int numCorrect = id3Tree.test(trainExamples);
-		System.out.println("Using " + args[0] + "in gain function.");
+		System.out.println("Using " + args[0] + " in gain function.");
 		System.out.println("The accuracy on the training data is: " + numCorrect + "/" + trainExamples.size() +
 				" = " + ((double) numCorrect) / trainExamples.size());
 

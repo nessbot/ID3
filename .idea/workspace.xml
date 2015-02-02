@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="035e4dbc-5647-4c35-94cd-15a3374f5bdb" name="Default" comment="Fixed gain function to actually examine subsets where feature = value">
+    <list default="true" id="035e4dbc-5647-4c35-94cd-15a3374f5bdb" name="Default" comment="small change to gini function">
       <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" afterPath="" />
-      <change type="DELETED" beforePath="E:\Documents\School\CS 1675\Assignments\ID3\.gitignore" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" afterPath="" />
       <change type="DELETED" beforePath="E:\Documents\School\CS 1675\Assignments\ID3\.idea\.name" afterPath="" />
       <change type="DELETED" beforePath="E:\Documents\School\CS 1675\Assignments\ID3\.idea\codeStyleSettings.xml" afterPath="" />
       <change type="DELETED" beforePath="E:\Documents\School\CS 1675\Assignments\ID3\.idea\compiler.xml" afterPath="" />
       <change type="DELETED" beforePath="E:\Documents\School\CS 1675\Assignments\ID3\.idea\encodings.xml" afterPath="" />
       <change type="DELETED" beforePath="E:\Documents\School\CS 1675\Assignments\ID3\.idea\misc.xml" afterPath="" />
       <change type="DELETED" beforePath="E:\Documents\School\CS 1675\Assignments\ID3\.idea\modules.xml" afterPath="" />
-      <change type="DELETED" beforePath="E:\Documents\School\CS 1675\Assignments\ID3\.idea\scopes\scope_settings.xml" afterPath="" />
       <change type="DELETED" beforePath="E:\Documents\School\CS 1675\Assignments\ID3\.idea\uiDesigner.xml" afterPath="" />
       <change type="DELETED" beforePath="E:\Documents\School\CS 1675\Assignments\ID3\.idea\vcs.xml" afterPath="" />
       <change type="DELETED" beforePath="E:\Documents\School\CS 1675\Assignments\ID3\.idea\workspace.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ID3/ID3Tree.java" afterPath="$PROJECT_DIR$/src/ID3/ID3Tree.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
     </list>
     <ignored path="ID3.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -53,7 +52,7 @@
       <file leaf-file-name="ID3Tree.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ID3/ID3Tree.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.09663866" vertical-offset="2783" max-vertical-offset="7004">
+            <state vertical-scroll-proportion="-2.3466387" vertical-offset="3854" max-vertical-offset="7004">
               <caret line="163" column="0" selection-start-line="163" selection-start-column="0" selection-end-line="163" selection-end-column="0" />
               <folding>
                 <element signature="e#4691#4700#0" expanded="true" />
@@ -592,7 +591,7 @@
       <workItem from="1422827199361" duration="1336000" />
       <workItem from="1422828571992" duration="1722000" />
       <workItem from="1422830364012" duration="184000" />
-      <workItem from="1422830557644" duration="7271000" />
+      <workItem from="1422830557644" duration="8244000" />
     </task>
     <task id="LOCAL-00001" summary="Added all files to repository">
       <created>1422827818497</created>
@@ -636,15 +635,21 @@
       <option name="project" value="LOCAL" />
       <updated>1422837334844</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="small change to gini function">
+      <created>1422843027571</created>
+      <option name="number" value="00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1422843027571</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="75057000" />
+    <option name="totallyTimeSpent" value="76030000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1696" height="1026" extended-state="7" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3277405" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -660,7 +665,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37472036" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32908162" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24633251" sideWeight="0.49718574" order="4" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24633251" sideWeight="0.49718574" order="4" side_tool="false" content_ui="combo" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24633251" sideWeight="0.50281423" order="2" side_tool="true" content_ui="tabs" />
@@ -726,7 +731,8 @@
     <MESSAGE value="Test2" />
     <MESSAGE value="Removed redundant node fration setting." />
     <MESSAGE value="Fixed gain function to actually examine subsets where feature = value" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed gain function to actually examine subsets where feature = value" />
+    <MESSAGE value="small change to gini function" />
+    <option name="LAST_COMMIT_MESSAGE" value="small change to gini function" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -777,17 +783,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/ID3/Example.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="345" max-vertical-offset="850">
-          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#1106#1107#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Resources/sampletest.dat">
       <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
         <state />
@@ -1342,9 +1337,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/copyright/profiles_settings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="505">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ID3/ID3Tree.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.09663866" vertical-offset="2783" max-vertical-offset="7004">
+        <state vertical-scroll-proportion="-2.3466387" vertical-offset="3854" max-vertical-offset="7004">
           <caret line="163" column="0" selection-start-line="163" selection-start-column="0" selection-end-line="163" selection-end-column="0" />
           <folding>
             <element signature="e#4691#4700#0" expanded="true" />

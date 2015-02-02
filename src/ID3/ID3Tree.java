@@ -328,7 +328,7 @@ public class ID3Tree {
 		String feature = null;
 		double max = 0.;
 		for (Map.Entry pair : gains.entrySet()) {
-			if (Double.compare((Double) pair.getValue(), max) > 0) {             //if gain is greater than max
+			if (Double.compare((Double) pair.getValue(), max) >= 0) {             //if gain is greater than max
 				max = (Double) pair.getValue();
 				feature = (String) pair.getKey();
 			} // todo: possibly just quit if max = 1 since it will be max; may save time for large datasets

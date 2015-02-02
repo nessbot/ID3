@@ -215,6 +215,9 @@ pip-log.txt
 #Mr Developer
 .mr.developer.cfg
 
-#IntelliJ
-##########
+############
+## IntelliJ
+############
 out/
+.idea
+.gitignore

@@ -1,5 +1,3 @@
-import ID3.*;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,9 +5,11 @@ import java.util.HashMap;
 
 
 /**
- * Created by Steve on 1/29/2015.
+ * Created by Steven Saylor on 1/29/2015.
+ * CS 1675
+ * Assignment 2
  */
-public class Main<E, T> {
+public class ID3<E, T> {
 	private static ArrayList<String> featureNames;
 	private static ArrayList<String> possibleLabels;
 	private static int diversity;   //value representing diversity function to use

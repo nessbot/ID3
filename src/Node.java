@@ -1,5 +1,3 @@
-package ID3;
-
 import java.util.HashMap;
 
 /**

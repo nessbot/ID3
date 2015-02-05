@@ -1,4 +1,5 @@
 import java.io.*;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -13,22 +14,28 @@ public class ID3<E, T> {
 	private static ArrayList<String> featureNames;
 	private static ArrayList<String> possibleLabels;
 	private static int diversity;   //value representing diversity function to use
-	private static ArrayList<Example> trainExamples = new ArrayList<Example>();
-	private static ArrayList<Example> testExamples = new ArrayList<Example>();
+	private static ArrayList<TrainingExample> trainExamples = new ArrayList<TrainingExample>();
+	private static ArrayList<TrainingExample> testExamples = new ArrayList<TrainingExample>();
 	private static HashMap<String, ArrayList<String>> possibleFeatureValues = new HashMap<String, ArrayList<String>>();
 
 	public static void main(String[] args) throws IOException {
+		printHeader();
 		readFiles(args);
-
-		ID3Tree id3Tree = new ID3Tree(trainExamples, possibleLabels, possibleFeatureValues, diversity);
-		int numCorrect = id3Tree.test(trainExamples);
 		System.out.println("Using " + args[0] + " in gain function.");
+		ID3Tree id3Tree = new ID3Tree(trainExamples, possibleLabels, possibleFeatureValues, diversity);
+
+		DecimalFormat df = new DecimalFormat("###.###");
+
+		int numCorrect = id3Tree.test(trainExamples);
+		double percent = (((double) numCorrect) / trainExamples.size()) * 100;
 		System.out.println("The accuracy on the training data is: " + numCorrect + "/" + trainExamples.size() +
-				" = " + ((double) numCorrect) / trainExamples.size());
+				" = " + df.format(percent) + "%");
 
 		numCorrect = id3Tree.test(testExamples);
+		percent = (((double) numCorrect) / testExamples.size()) * 100;
 		System.out.println("The accuracy on the test data is: " + numCorrect + "/" + testExamples.size() +
-				" = " + ((double) numCorrect) / testExamples.size());
+				" = " + df.format(percent) + "%");
+
 		System.out.println("The final decision tree:");
 		id3Tree.printTree();
 
@@ -38,6 +45,7 @@ public class ID3<E, T> {
 		BufferedReader br;
 		String line;
 		String[] ln;
+
 		if (args[0].equals("entropy")) {
 			diversity = 0;
 		} else if (args[0].equals("misclassification")) {
@@ -75,7 +83,7 @@ public class ID3<E, T> {
 			for (int i = 2; i < ln.length; i++) {
 				values[i - 2] = ln[i];
 			}
-			trainExamples.add(new Example(number, label, values, featureNames));
+			trainExamples.add(new TrainingExample(number, label, values, featureNames));
 		}
 
         /*Read Test File*/
@@ -88,15 +96,15 @@ public class ID3<E, T> {
 			for (int i = 2; i < ln.length; i++) {
 				values[i - 2] = ln[i];
 			}
-			testExamples.add(new Example(number, label, values, featureNames));
+			testExamples.add(new TrainingExample(number, label, values, featureNames));
 		}
 	}
 
 	private static void printHeader() {
 		System.out.println("################################################################################");
-		System.out.println("# ID3 Implementation              CS1675                            Homework 2 #");
+		System.out.println("# ID3 Implementation                CS1675                          Homework 2 #");
 		System.out.println("#------------------------------------------------------------------------------#");
-		System.out.println("#                              Steven Saylor                                   #");
+		System.out.println("#                               Steven Saylor                                  #");
 		System.out.println("################################################################################");
 		System.out.println();
 	}

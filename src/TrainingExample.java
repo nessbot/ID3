@@ -4,7 +4,7 @@ import java.util.HashMap;
 /**
  * Created by Steve on 1/29/2015.
  */
-public class Example {
+public class TrainingExample {
 	int number;
 	String label;       //classifcation label
 	HashMap<String, String> featureValues;      //key is feature, value is value
@@ -16,7 +16,7 @@ public class Example {
 	 * @param values      array of values associated with each feature
 	 * @param featureList array of features to use as keys for Feature -> Value hashmap
 	 */
-	public Example(int number, String label, String[] values, ArrayList<String> featureList) {
+	public TrainingExample(int number, String label, String[] values, ArrayList<String> featureList) {
 		featureValues = new HashMap<String, String>();
 		this.number = number;
 		this.label = label;

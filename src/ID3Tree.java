@@ -7,7 +7,7 @@ import java.util.*;
  * Created by Steve on 1/29/2015.
  */
 public class ID3Tree {
-	ArrayList<Example> s;
+	ArrayList<TrainingExample> s;
 	ArrayList<String> possibleLabels;
 	ArrayList<String> feats = new ArrayList<String>();
 	int diversity;
@@ -15,7 +15,38 @@ public class ID3Tree {
 	HashMap<String, ArrayList<String>> possibleFeatureValues;
 	Node root = new Node();
 
-	public ID3Tree(ArrayList<Example> s, ArrayList<String> possibleLabels,
+	/**
+	 * Mini collection class to store a double diversity value and numerator used to calculate
+	 * that diversity value
+	 */
+	private class DiversityPair {
+
+		double diversity;
+		int n;
+
+		private DiversityPair(Double d, int n) {
+			this.diversity = d;
+			this.n = n;
+		}
+
+	}
+
+	/**
+	 * Mini collection class to store a a label - frequency pair
+	 */
+	private class LabelPair {
+
+		String label;
+		int freq;
+
+		private LabelPair(String l, int f) {
+			this.label = l;
+			this.freq = f;
+		}
+
+	}
+
+	public ID3Tree(ArrayList<TrainingExample> s, ArrayList<String> possibleLabels,
 				   HashMap<String, ArrayList<String>> features, int diversity) {
 		this.s = s;
 		this.possibleLabels = possibleLabels;
@@ -32,10 +63,10 @@ public class ID3Tree {
 	 * @param s test set of examples
 	 * @return number of correct guesses
 	 */
-	public int test(ArrayList<Example> s) {
+	public int test(ArrayList<TrainingExample> s) {
 		int numCorrect = 0;
 
-		for (Example x : s) {
+		for (TrainingExample x : s) {
 			String correctLabel = x.getLabel();
 			String guessLabel = recTest(root, x);
 			if (correctLabel.equals(guessLabel)) {
@@ -51,7 +82,7 @@ public class ID3Tree {
 	 * @param x example being examined
 	 * @return the label associated with this path
 	 */
-	private String recTest(Node node, Example x) {
+	private String recTest(Node node, TrainingExample x) {
 
 		if (node.label != null) {
 			return node.label;
@@ -96,39 +127,25 @@ public class ID3Tree {
 	}
 
 	/**
-	 * Updates the indent ammount used by @Method recPrintTree
-	 *
-	 * @param x the number of times to indent by
-	 * @return a string of spaces based on the ammount to indent by
-	 */
-	private String changeIndent(int x) {
-		String result = "";
-		for (int i = 0; i < x; i++) {
-			result = result + "  ";
-		}
-		return result;
-	}
-
-	/**
-	 * ID3 algorithm starting point
+	 * ID3 algorithm starting point. Called by constructor to build decision tree.
 	 *
 	 * @param s     set of training examples
 	 * @param feats set of features
 	 */
-	private void runID3(ArrayList<Example> s, ArrayList<String> feats) {
+	private void runID3(ArrayList<TrainingExample> s, ArrayList<String> feats) {
 		this.root = recID3(s, feats);
 	}
 
 	/**
-	 * Recursive ID3 algorithm
+	 * Recursive ID3 algorithm. Builds decision tree recursively.
 	 *
 	 * @param s     set of training examples
 	 * @param feats set of features
 	 */
-	private Node recID3(ArrayList<Example> s, ArrayList<String> feats) {
+	private Node recID3(ArrayList<TrainingExample> s, ArrayList<String> feats) {
 		//create root node
 		Node root = new Node();
-		if (checkLabels(s)) {                                           // if everything in S has the same label
+		if (haveSameLabel(s)) {                                           // if everything in S has the same label
 			root.setLabel(s.get(0).label);                              // set root's label to the ubiquitous label
 			root.setLabelFraction(s.size(), s.size());                    // set fraction of label to 1
 			return root;                                                // and return it
@@ -146,14 +163,14 @@ public class ID3Tree {
 			String bestFeature = getBestFeature(gains);                     // find the best feature i.e. highest gain
 			root.setFeature(bestFeature);                                   // associate current node with the best feature
 			for (String value : possibleFeatureValues.get(bestFeature)) {   // now only looking at best feature
-				ArrayList<Example> sv = new ArrayList<Example>();           // generate subset of s where
+				ArrayList<TrainingExample> sv = new ArrayList<TrainingExample>();           // generate subset of s where
 				ArrayList<String> newFeats = new ArrayList<String>();
 
 				for (String f : feats) {                                    // make new feature vector without
 					if (!f.equals(bestFeature))                             //  the best feature
 						newFeats.add(f);
 				}
-				for (Example x : s) {                                       // generate subset of examples comprised of
+				for (TrainingExample x : s) {                                       // generate subset of examples comprised of
 					if (x.getFeatureValue(bestFeature).equals(value)) {     //  examples wherebest feature equals the
 						sv.add(x);                                          //  currently examnined value (Sv)
 					}
@@ -179,14 +196,14 @@ public class ID3Tree {
 	 * @param s       the set being examined
 	 * @return the information gain value between 0 and 1
 	 */
-	private double findGain(String feature, ArrayList<Example> s) {
+	private double findGain(String feature, ArrayList<TrainingExample> s) {
 		ArrayList<String> values = possibleFeatureValues.get(feature);
 		ArrayList<DiversityPair> diversityPairs = new ArrayList<DiversityPair>();
 		DiversityPair tempDiversity;
 		Double setDiversity = 0.0;
 
 		for (String value : values) {                                           // for each possible values of the examined feature
-			ArrayList<Example> sfv = getFeatureValueSet(feature, value, s);        // Subset of s, S(f=v)
+			ArrayList<TrainingExample> sfv = getFeatureValueSet(feature, value, s);        // Subset of s, S(f=v)
 			switch (diversity) {                                                // calculate diversity
 				case 0:
 					tempDiversity = entropy(sfv);
@@ -222,32 +239,12 @@ public class ID3Tree {
 	}
 
 	/**
-	 * Generates subset of s, containing only examples in which the selected feature matches has the selected value
-	 *
-	 * @param feature string feature name that is being tested
-	 * @param value   string value name against which the feature is being tested
-	 * @param s       collection of examples from which the set will be generated
-	 * @return subset containing only those examples where the feature had the value
-	 */
-	private ArrayList<Example> getFeatureValueSet(String feature, String value, ArrayList<Example> s) {
-		ArrayList<Example> tempS = new ArrayList<Example>(s);
-		Iterator itr = tempS.iterator();
-		while (itr.hasNext()) {
-			Example test = (Example) itr.next();
-			if (!test.getFeatureValue(feature).equals(value)) {
-				itr.remove();
-			}
-		}
-		return tempS;
-	}
-
-	/**
 	 * Calculates the entropy of set of examples
 	 *
 	 * @param s set of examples used for calculation
 	 * @return a DiversityPair containing the entropy value and the size of the set  //todo: make this just return entropy
 	 */
-	private DiversityPair entropy(ArrayList<Example> s) {
+	private DiversityPair entropy(ArrayList<TrainingExample> s) {
 		int d = s.size();
 		int n;                                                         // numerator and denom for probability calc
 		double tempEnt;
@@ -255,7 +252,7 @@ public class ID3Tree {
 
 		for (String label : possibleLabels) {
 			n = 0;
-			for (Example x : s) {
+			for (TrainingExample x : s) {
 				if (x.getLabel().equals(label)) {
 					n++;
 				}
@@ -277,11 +274,11 @@ public class ID3Tree {
 	 * @param s the set of examples being tested
 	 * @return a DiversityPair containing the misclassification value and the size of the set  //todo: make this just return misclass value
 	 */
-	private DiversityPair misclassifcation(ArrayList<Example> s) {
+	private DiversityPair misclassifcation(ArrayList<TrainingExample> s) {
 		int d = s.size();
 		int n = 0;
 		String max = getCommonLabel(s).label;
-		for (Example x : s) {
+		for (TrainingExample x : s) {
 			if (x.getLabel().equals(max)) {
 				n++;
 			}
@@ -297,13 +294,13 @@ public class ID3Tree {
 	 * @param s the set of examples being tested
 	 * @return a DiversityPair containing the gini value and the size of the set  //todo: make this just return gini value
 	 */
-	private DiversityPair gini(ArrayList<Example> s) {
+	private DiversityPair gini(ArrayList<TrainingExample> s) {
 		int d = s.size();
 		int n;
 		double result = 0;
 		for (String label : possibleLabels) {
 			n = 0;
-			for (Example x : s) {                                           // for cases where the example's feature
+			for (TrainingExample x : s) {                                           // for cases where the example's feature
 				if (x.getLabel().equals(label)) {
 					n++;
 				}
@@ -313,6 +310,26 @@ public class ID3Tree {
 			result += tempGini;
 		}
 		return new DiversityPair(1 - result, d);                                // since gini = 1-(Sum(p^2) over labels)
+	}
+
+	/**
+	 * Generates subset of s, containing only examples in which the selected feature matches has the selected value
+	 *
+	 * @param feature string feature name that is being tested
+	 * @param value   string value name against which the feature is being tested
+	 * @param s       collection of examples from which the set will be generated
+	 * @return subset containing only those examples where the feature had the value
+	 */
+	private ArrayList<TrainingExample> getFeatureValueSet(String feature, String value, ArrayList<TrainingExample> s) {
+		ArrayList<TrainingExample> tempS = new ArrayList<TrainingExample>(s);
+		Iterator itr = tempS.iterator();
+		while (itr.hasNext()) {
+			TrainingExample test = (TrainingExample) itr.next();
+			if (!test.getFeatureValue(feature).equals(value)) {
+				itr.remove();
+			}
+		}
+		return tempS;
 	}
 
 	/**
@@ -340,13 +357,13 @@ public class ID3Tree {
 	 * @param s set of examples
 	 * @return LabelPair containing the label value and it's frequency in s
 	 */
-	private LabelPair getCommonLabel(ArrayList<Example> s) {
+	private LabelPair getCommonLabel(ArrayList<TrainingExample> s) {
 		HashMap<String, Integer> counts = new HashMap<String, Integer>();
 		int max = 0;
 		for (String label : possibleLabels) {
 			counts.put(label, 0);
 		}
-		for (Example x : s) {                             //go through
+		for (TrainingExample x : s) {                             //go through
 			counts.put(x.label, counts.get(x.label) + 1);
 			if (counts.get(x.label) > max) {
 				max++;
@@ -367,9 +384,9 @@ public class ID3Tree {
 	 * @return true if every example in the set has the same label,
 	 * false otherwise
 	 */
-	private boolean checkLabels(ArrayList<Example> s) {
+	private boolean haveSameLabel(ArrayList<TrainingExample> s) {
 		String test = s.get(0).label;
-		for (Example ex : s) {
+		for (TrainingExample ex : s) {
 			if (!ex.label.equals(test)) {
 				return false;
 			}
@@ -378,29 +395,16 @@ public class ID3Tree {
 	}
 
 	/**
-	 * Container class to store a double diversity value and numerator used to calculate
-	 * that diversity value
+	 * Updates the indent ammount used by @Method recPrintTree
+	 *
+	 * @param x the number of times to indent by
+	 * @return a string of spaces based on the ammount to indent by
 	 */
-	private class DiversityPair {
-		double diversity;
-		int n;
-
-		private DiversityPair(Double d, int n) {
-			this.diversity = d;
-			this.n = n;
+	private String changeIndent(int x) {
+		String result = "";
+		for (int i = 0; i < x; i++) {
+			result = result + "  ";
 		}
-	}
-
-	/**
-	 * Container class to store a a label - frequency pair
-	 */
-	private class LabelPair {
-		String label;
-		int freq;
-
-		private LabelPair(String l, int f) {
-			this.label = l;
-			this.freq = f;
-		}
+		return result;
 	}
 }

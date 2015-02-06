@@ -372,7 +372,7 @@ public class ID3Tree {
 				max++;
 			}
 		}
-		for (HashMap.Entry<String, Integer> entry : counts.entrySet()) {
+		for (Map.Entry<String, Integer> entry : counts.entrySet()) {
 			if (entry.getValue() == max) {
 				return new LabelPair(entry.getKey(), max);
 			}

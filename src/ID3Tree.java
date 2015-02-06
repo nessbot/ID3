@@ -118,7 +118,7 @@ public class ID3Tree {
 		} else {
 			HashMap<String, Node> children = node.getChildren();
 			for (Map.Entry<String, Node> child : children.entrySet()) {
-				System.out.print(indent + node.getFeature() + ": " + child.getKey());
+				System.out.print(indent + node.getFeature() + "=" + child.getKey());
 				indentAmmount++;
 				if (child.getValue().getLabel() == null) {    //if next call is to a leaf node, next line
 					System.out.println();

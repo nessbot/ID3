@@ -1,4 +1,6 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,7 +12,7 @@ import java.util.HashMap;
  * CS 1675
  * Assignment 2
  */
-public class ID3<E, T> {
+public class ID3 {
 	private static ArrayList<String> featureNames;
 	private static ArrayList<String> possibleLabels;
 	private static int diversity;   //value representing diversity function to use
@@ -66,9 +68,7 @@ public class ID3<E, T> {
 			ln = line.split(",");
 			String name = ln[0];
 			ArrayList<String> values = new ArrayList<String>();
-			for (int i = 1; i < ln.length; i++) {
-				values.add(ln[i]);
-			}
+			values.addAll(Arrays.asList(ln).subList(1, ln.length));
 			possibleFeatureValues.put(name, values);      //map values to feature
 			featureNames.add(name);         //for keeping track of feature order
 		}
@@ -80,9 +80,7 @@ public class ID3<E, T> {
 			int number = Integer.parseInt(ln[0]);
 			String label = ln[1];       //set clafs
 			String[] values = new String[ln.length - 1];
-			for (int i = 2; i < ln.length; i++) {
-				values[i - 2] = ln[i];
-			}
+			System.arraycopy(ln, 2, values, 0, ln.length - 2);
 			trainExamples.add(new TrainingExample(number, label, values, featureNames));
 		}
 
@@ -93,9 +91,7 @@ public class ID3<E, T> {
 			int number = Integer.parseInt(ln[0]);
 			String label = ln[1];       //set clafs
 			String[] values = new String[ln.length - 1];
-			for (int i = 2; i < ln.length; i++) {
-				values[i - 2] = ln[i];
-			}
+			System.arraycopy(ln, 2, values, 0, ln.length - 2);
 			testExamples.add(new TrainingExample(number, label, values, featureNames));
 		}
 	}

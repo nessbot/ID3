@@ -21,8 +21,13 @@ public class ID3 {
 	private static HashMap<String, ArrayList<String>> possibleFeatureValues = new HashMap<String, ArrayList<String>>();
 
 	public static void main(String[] args) throws IOException {
+		try {
+			readFiles(args);
+		} catch (ArrayIndexOutOfBoundsException e) {
+			System.out.println("Proper usage: ID3 <diversity function> <Config file> <Training File> <Test File>");
+			System.exit(1);
+		}
 		printHeader();
-		readFiles(args);
 		System.out.println("Using " + args[0] + " in gain function.");
 		ID3Tree id3Tree = new ID3Tree(trainExamples, possibleLabels, possibleFeatureValues, diversity);
 

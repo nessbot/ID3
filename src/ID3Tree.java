@@ -238,7 +238,11 @@ public class ID3Tree {
 		for (DiversityPair dp : diversityPairs) {
 			subsetDiversity += (((double) dp.n / d) * dp.diversity);
 		}
-		return (setDiversity - subsetDiversity);
+		Double result = setDiversity - subsetDiversity;
+		if (result.compareTo(0.) == -1) {                                //fixme: cheap fix for dealing with small doubles problem
+			result = 0.;
+		}
+		return (result);
 	}
 
 	/**

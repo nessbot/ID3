@@ -23,7 +23,7 @@ public class StatTest {
 	private static HashMap<String, ArrayList<String>> possibleFeatureValues = new HashMap<String, ArrayList<String>>();
 	private static boolean shuffle = false;
 	private static final String[] DIVERSITY_NAMES = {"entropy", "gini", "misclassification"};
-	private static final int FOLDS = 5;
+	private static final int FOLDS = 10;
 	private static ArrayList<ArrayList<TrainingExample>> kFold = new ArrayList<ArrayList<TrainingExample>>();
 	private static DecimalFormat df = new DecimalFormat("###.###");
 	private static PrintWriter writer;
@@ -69,6 +69,8 @@ public class StatTest {
 			}
 			testStats(trainExamples, testExamples);
 		}
+
+
 		writer.close();
 
 	}
@@ -92,6 +94,7 @@ public class StatTest {
 			writer.println(DIVERSITY_NAMES[k] + "," + numCorrect + "," + test.size());
 		}
 	}
+
 
 	private static void readFiles(String[] args) throws IOException {
 		BufferedReader br;
